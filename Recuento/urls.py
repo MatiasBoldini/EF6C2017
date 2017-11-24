@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from votos.views import resultado_global, resultado_distrital
+from votos.views import *
 
 
 urlpatterns = [
     url(r'^$', resultado_global),
     #TODO: Arreglar esta URL para que tome por parametro el id del distrito
-    url(r'^distrital/', resultado_distrital, name='distrital'),
+    url(r'^distrital/(\id_distrito+)$', distrital, name="distrital"),
     url(r'^admin/', admin.site.urls),
 ]

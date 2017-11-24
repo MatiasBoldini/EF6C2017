@@ -26,9 +26,11 @@ class Candidato(models.Model):
     """
     nombre = models.CharField('Nombre del candidato', max_length=25)
     distrito = models.ForeignKey(Distrito)
+    cantidad_de_votos = models.IntegerField('Cantidad de votos', default=0)
+    porcentaje = models.IntegerField('Porcentaje de votos', default=0)
 
     def __str__(self):
-        return 'Candidato {}'.format(self.nombre)
+        return 'Candidato {} tuvo {} voto'.format(self.nombre, self.cantidad_de_votos)
 
 class Voto(models.Model):
     """

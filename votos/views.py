@@ -17,29 +17,19 @@ def resultado_global(request):
     Porcentaje de votos nulos
     Total de votos de la elección
     """
-    distrito = Distrito.objects.all()
-    #TODO TU CODIGO AQUI
-    return render(request,'global.html')
+    votos_nulos = Voto.objects.filter(valido=False)
+    distritos = Distrito.objects.all()
+    candidatos = Candidato.objects.all().order_by('-cantidad_de_votos')
+    padrones = Distrito.objects.all()
+    votos_totales = Voto.objects.all()
+    votos_candidatos = Candidato.objects.all()
+    for candidato in votos_candidatos:
+        candidato.cantidad_de_votos = Voto.objects.filter(candidato=candidato, valido=True).count()
+        candidato.save()
 
-def resultado_distrital(request, id_distrito):
-    distrito = Distrito.objects.get(id=id_distrito)
-    cantidad = Voto.objects.filter(candididato__distrito=distrito).count()
-    porcentaje_votantes = distrito.cantidad_votantes * 100 / cantidad
-    total_votantes = cantidad
-    #Null = True es para saber los votos validos
-    voto = Voto.objects.filter(candididato__distrito=distrito, valido=True)
-    ganador = Voto.objects.filter(candididato__distrito=distrito, valido=True).count()
-    for a in ganador:
-        if a
-    ganador
+    return render(request,'global.html', {'votos_nulos':votos_nulos,'votos_totales':votos_totales, 'candidato':candidatos})
 
-    return render(request, 'distrital.html', {'distrito':distrito}, {'porcentaje_votantes': porcentaje_votantes}, {'total_votantes': total_votantes}, {'ganador': ganador})
-
-    <li>Tamaño del padrón: {{distrito.cantidad_votantes}}</li>
-    <li>Porcentaje de votantes: {{porcentaje_votantes}} </li>
-    <li>Total de votos del distrito: {{total_votantes}} </li>
-    <li>Candidato ganador: {{ganador}} </li>
-
+def distrital(request, id_distrito):
     """
     Generar la vista para devolver el resultado distrital de la elección
     Tener en cuenta que tiene que tener:
@@ -48,8 +38,14 @@ def resultado_distrital(request, id_distrito):
     Total de votos del distrito
     Candidato ganador
     """
-    context={}
+    distrito = Distrito.objects.get(id=id_distrito)
+    cantidad = Voto.objects.filter(candididato__distrito=distrito).count()
+    porcentaje_votantes = distrito.cantidad_votantes * 100 / cantidad
+    total_votantes = cantidad
+    #Null = False es para saber los votos validos
+    voto = Voto.objects.filter(candididato__distrito=distrito, valido=False)
+    mayor_cantidad_de_votos = 0
+    ganador = Voto.objects.filter(candididato__distrito=distrito, valido=True).count()
+    return render(request, 'distrital.html', {'distrito':distrito}, {'porcentaje_votantes': porcentaje_votantes}, {'total_votantes': total_votantes}, {'ganador': ganador})
 
-    #TODO TU CODIGO AQUI
-
-    return render(request,'distrital.html',context)
+    #<li>Candidato ganador: {{ganador}} </li>
