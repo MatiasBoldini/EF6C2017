@@ -27,6 +27,7 @@ class Candidato(models.Model):
     nombre = models.CharField('Nombre del candidato', max_length=25)
     distrito = models.ForeignKey(Distrito)
     cantidad_de_votos = models.IntegerField('Cantidad de votos', default=0)
+    cantidad_de_votos_nulos = models.IntegerField('Cantidad de nulos', default=0)
     porcentaje = models.IntegerField('Porcentaje de votos', default=0)
 
     def __str__(self):

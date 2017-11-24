@@ -12,7 +12,7 @@
 {% for candidatos in candidato %}
 
     <span> Hubo un total de {{candidatos.cantidad_de_votos}} voto por {{candidatos.nombre}}</span>
-    <span> {{candidatos.nombre}} tuvo un total del {{candidatos.cantidad_de_votos}}*100/{{votos_totales|length}} </span>
+    <span> {{candidatos.nombre}} tuvo un total del {{candidatos.porcentaje}} %</span>
     <br>
 
 {% endfor %}
@@ -21,6 +21,6 @@
 <!--Si la url esta bien escrita, este codigo es funcional -->
 {% for distrito in distritos %}
 
-    <a href="{% url 'distrital' distrito.id%}">{{distrito}}</a><br>
+    <a href="{% url 'distrital' distrito.id %}">{{distrito}}</a><br>
 
 {% endfor %}
