@@ -22,13 +22,15 @@ class Candidato(models.Model):
     """
     Se decide utilizar este modelo para la clase candidato porque es
     necesario saber a que Distrito pertenece, y se le agrega un nombre
-    por temas esteticos.
+    por temas esteticos tambien estan los campos cantidad_de_votos, cantidad_de_votos_nulos y
+    porcentaje para definirles los valores a partir de la sumatoria de votos.
     """
     nombre = models.CharField('Nombre del candidato', max_length=25)
     distrito = models.ForeignKey(Distrito)
     cantidad_de_votos = models.IntegerField('Cantidad de votos', default=0)
     cantidad_de_votos_nulos = models.IntegerField('Cantidad de nulos', default=0)
     porcentaje = models.IntegerField('Porcentaje de votos', default=0)
+    porcentaje_nulos = models.IntegerField('Porcentaje de nulos', default=0)
 
     def __str__(self):
         return 'Candidato {} tuvo {} voto'.format(self.nombre, self.cantidad_de_votos)

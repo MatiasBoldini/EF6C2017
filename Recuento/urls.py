@@ -20,8 +20,8 @@ from votos.views import *
 
 
 urlpatterns = [
-    url(r'asd^$', resultado_global),
+    url(r'^$', resultado_global),
     #TODO: Arreglar esta URL para que tome por parametro el id del distrito
-    url(r'^$', distrital, name="distrital"),
+    url(r'^distrital/(?P<id_distrito>\d+)$', distrital, name="distrital"),
     url(r'^admin/', admin.site.urls),
 ]

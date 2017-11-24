@@ -1,7 +1,7 @@
 <h1>Resultado de elecciones</h1>
 <!-- Deberias escribir el codigo aqui -->
 
-<span> Cantidad de Votos: {{votos_totales|length}}</span>
+<span> Cantidad de Votos : {{votos_totales|length}}</span>
 
 <br>
 
@@ -11,16 +11,16 @@
 
 {% for candidatos in candidato %}
 
-    <span> Hubo un total de {{candidatos.cantidad_de_votos}} voto por {{candidatos.nombre}}</span>
+    <span> Hubo un total de {{candidatos.cantidad_de_votos}} voto por {{candidatos.nombre}} y un total de {{candidatos.cantidad_de_votos_nulos}} nulos</span>
     <span> {{candidatos.nombre}} tuvo un total del {{candidatos.porcentaje}} %</span>
     <br>
 
 {% endfor %}
 
 <h2>Resultados Por distrito</h2>
-<!--Si la url esta bien escrita, este codigo es funcional -->
-{% for distrito in distritos %}
 
-    <a href="{% url 'distrital' distrito.id %}">{{distrito}}</a><br>
+{% for distrito in todos_los_distritos %}
+
+    <a href="{% url 'distrital' distrito.id %}"> {{distrito}}</a>
 
 {% endfor %}
