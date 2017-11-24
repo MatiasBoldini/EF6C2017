@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from votos.models import *
+from .models import *
 
 
 def resultado_global(request):
@@ -17,14 +17,29 @@ def resultado_global(request):
     Porcentaje de votos nulos
     Total de votos de la elección
     """
-    context={}
-    context['distritos'] = Distrito.objects.all()
+    distrito = Distrito.objects.all()
     #TODO TU CODIGO AQUI
+    return render(request,'global.html')
 
-    return render(request,'global.html',context)
+def resultado_distrital(request, id_distrito):
+    distrito = Distrito.objects.get(id=id_distrito)
+    cantidad = Voto.objects.filter(candididato__distrito=distrito).count()
+    porcentaje_votantes = distrito.cantidad_votantes * 100 / cantidad
+    total_votantes = cantidad
+    #Null = True es para saber los votos validos
+    voto = Voto.objects.filter(candididato__distrito=distrito, valido=True)
+    ganador = Voto.objects.filter(candididato__distrito=distrito, valido=True).count()
+    for a in ganador:
+        if a
+    ganador
 
+    return render(request, 'distrital.html', {'distrito':distrito}, {'porcentaje_votantes': porcentaje_votantes}, {'total_votantes': total_votantes}, {'ganador': ganador})
 
-def resultado_distrital(request):
+    <li>Tamaño del padrón: {{distrito.cantidad_votantes}}</li>
+    <li>Porcentaje de votantes: {{porcentaje_votantes}} </li>
+    <li>Total de votos del distrito: {{total_votantes}} </li>
+    <li>Candidato ganador: {{ganador}} </li>
+
     """
     Generar la vista para devolver el resultado distrital de la elección
     Tener en cuenta que tiene que tener:

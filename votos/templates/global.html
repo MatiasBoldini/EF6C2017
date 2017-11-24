@@ -1,13 +1,11 @@
 <h1>Resultado de elecciones</h1>
 
-<!-- Deberias escribir el codigo aqui -->
-
+{<!-- Deberias escribir el codigo aqui -->}
 
 <h2>Resultados Por distrito</h2>
-
 <!--Si la url esta bien escrita, este codigo es funcional -->
-
 {% for distrito in distritos %}
-<a href="{% url 'distrital' %}">{{distrito}}</a><br>
+
+    <a href="{% url 'distrital' %}">{{distrito}}</a><br>
 
 {% endfor %}

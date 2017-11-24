@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
-
-# Create your models here.
-
+from django.conf import settings
 
 class Distrito(models.Model):
     """
@@ -16,25 +13,28 @@ class Distrito(models.Model):
     nombre = models.CharField('Nombre del distrito', max_length=128)
     cantidad_votantes = models.IntegerField('Cantidad de votantes', default=0)
     latitude = models.DecimalField('Latitud', max_digits=14, decimal_places=10, default=0)
-    longitude = models.DecimalField('Latitud', max_digits=14, decimal_places=10, default=0)
-
+    longitude = models.DecimalField('Longitud', max_digits=14, decimal_places=10, default=0)
 
     def __str__(self):
         return 'Distrito {}'.format(self.nombre)
 
 class Candidato(models.Model):
     """
-    #TODO Completar segun consideraciones del desarrollador
-    En este comentario escribir por que se decide modelar de esta
-    forma la clase
+    Se decide utilizar este modelo para la clase candidato porque es
+    necesario saber a que Distrito pertenece, y se le agrega un nombre
+    por temas esteticos.
     """
-    pass
+    nombre = models.CharField('Nombre del candidato', max_length=25)
+    distrito = models.ForeignKey(Distrito)
 
+    def __str__(self):
+        return 'Candidato {}'.format(self.nombre)
 
-class Votos(models.Model):
+class Voto(models.Model):
     """
-    #TODO Completar segun consideraciones del desarrollador
-    En este comentario escribir por que se decide modelar de esta
-    forma la clase
+    Se decide utilizar este modelo para la clase votos porque es
+    necesario saber a que Candidato pertenece, y un boolean (valido)
+    para saber como debe ser contado el mismo, como valido o nulo
     """
-    pass
+    candidato = models.ForeignKey(Candidato)
+    valido = models.BooleanField(null=False)
